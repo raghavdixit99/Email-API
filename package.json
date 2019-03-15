@@ -7,5 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "raghav",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "express": "^4.16.4",
+    "mssql": "^5.0.2",
+    "mysql": "^2.16.0",
+    "nodemailer": "^5.1.1"
+  }
 }
