@@ -1,6 +1,6 @@
 require('dotenv').config();
+var sqldb = require('./db.js');
 var nodemailer = require('nodemailer');
-
 var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
@@ -8,7 +8,6 @@ var transporter = nodemailer.createTransport({
       pass: process.env.EMAIL_PASS
     }
   });
-  
 
   var mailOptions = {
     from: 'dixitraghav99@gmail.com',
@@ -18,6 +17,7 @@ var transporter = nodemailer.createTransport({
   };
   
   module.exports.sendEmail = ( async function(callback){
+
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
       console.log(error);
