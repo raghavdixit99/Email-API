@@ -12,8 +12,9 @@ con.connect( (err) => {
     console.log("Connected!");
     con.query("select email from teacher_db;", (err, result) => {
       if (err) throw err;
-      console.log("Result: " + result.length);
+      console.log("Result: " + result);
     });
+
 });
 
 module.exports.con;
