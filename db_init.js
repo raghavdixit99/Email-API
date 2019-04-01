@@ -7,10 +7,13 @@ var con = sql.createConnection({
     database : 'email_api_test'
 });
 
-con.connect().then( () => {
-    console.log("Connected db_init");
-}).catch((err) => {
-    console.error(err);
-})
+con.connect( (err) => {
+    if (err) throw err;
+    console.log("Connected!");
+    con.query("select email from teacher_db;", (err, result) => {
+      if (err) throw err;
+      console.log("Result: " + result.length);
+    });
+});
 
 module.exports.con;
