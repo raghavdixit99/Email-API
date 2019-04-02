@@ -1,31 +1,55 @@
 const sql = require('mysql');
-var date = new Date(Date.now()).toLocaleString().slice(0,3);
-// var receiver ;
-console.log(typeof(date));
+
 var con = sql.createConnection({
-    user : 'test-user',
-    password : 'ToughPass123!@#',
-    host : '54.146.176.87',
-    database : 'email_api_test'
+  user : 'test-user',
+  password : 'ToughPass123!@#',
+  host : '54.146.176.87',
+  database : 'email_api_test'
 });
-module.exports.GetEmail = ( async (receiver) => {
-  await con.connect( async (err, callback) => {
-    if (err) throw err;
+
+module.exports.GetEmail = ( async (callback) => {
+  var date = new Date(Date.now()).toLocaleString().slice(0,3);
+  var sql_command = 'select Email from teacher_db where Birth_Date = ';
+  sql_command = sql_command + date + ';';
+  console.log(sql_command);
+  await con.connect(function(err) {
+    if (err) {
+      callback(err);
+    }
     console.log("Connected!");
-    sql_command = 'select Email from teacher_db where Birth_Date = ';
-    sql_command = sql_command + date + ';';
-    // console.log(sql_command);
-    con.query(sql_command, (err, result) => {
+    con.query(sql_command, function(err, result) {
       if (err) throw err;
-      //console.log("Result: " + JSON.stringify(result));
-      // console.log(records);
-      return callback(result); 
+      callback(result);
+      con.end();
     });
-    // console.log(JSON.stringify(receiver));
-  }).then(()=>{
-    return receiver(result);
-  })
-  })();
+  });
+})( (res) => {
+  console.log(JSON.stringify(res));
+});
 
+// module.exports.GetEmail = ( async function(callback) {
+//   var date = new Date(Date.now()).toLocaleString().slice(0,3);
+//   await con.connect( async (err) => {
+//     if (err) {
+//       callback(err)
+//     } else {
+//       console.log("Connected!");
+//       var sql_command = 'select Email from teacher_db where Birth_Date = ';
+//       sql_command = sql_command + date + ';';
+//       // console.log(sql_command);
+//       con.query(sql_command, (err, result) => {
+//         if (err) {
+//           callback(err);
+//         } else {
+//           //console.log("Result: " + JSON.stringify(result));
+//           // console.log(records);
+//           callback(result); 
+//         }
+//       });
+//     }
+//   })
+//   callback(null);
+//   // console.log(JSON.stringify(receiver));
+// })();
 
-module.exports.con;
+module.exports.con = con;
