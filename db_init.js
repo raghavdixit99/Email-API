@@ -8,10 +8,11 @@ var con = sql.createConnection({
 });
 
 module.exports.GetEmail = ( async (callback) => {
-  var date = new Date(Date.now()).toLocaleString().slice(0,3);
+  // var date = new Date(Date.now()).toLocaleString().slice(0,3);
+  date = '04/1'
   var sql_command = 'select Email from teacher_db where Birth_Date = ';
   sql_command = sql_command + date + ';';
-  console.log(sql_command);
+  // console.log(sql_command);
   await con.connect(function(err) {
     if (err) {
       callback(err);
@@ -23,8 +24,6 @@ module.exports.GetEmail = ( async (callback) => {
       con.end();
     });
   });
-})( (res) => {
-  console.log(JSON.stringify(res));
 });
 
 // module.exports.GetEmail = ( async function(callback) {
